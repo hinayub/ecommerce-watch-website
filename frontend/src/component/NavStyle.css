@@ -1,0 +1,6 @@
+@media (max-width: 600px) {
+  .loginCart {
+    gap: 6px;
+    margin-right: 10px;
+  }
+}
