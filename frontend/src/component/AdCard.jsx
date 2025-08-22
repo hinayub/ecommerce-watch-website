@@ -1,42 +1,55 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import ProductColor from "./ProductColor";
 
-const AdCard = () => {
+const AdCard = ({ product }) => {
+  const [imageIndex, setImageIndex] = useState(0);
+  const [selected, setSelected] = useState(null);
+  const imgRef = useRef(null);
+
+  const totalimage = product.colors.length;
+  const imageIndexHandle = () => {
+    setImageIndex((prev) => (prev + 1) % totalimage);
+    setSelected(null);
+  };
   return (
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-      <a href="#">
-        <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
-      </a>
+    <div class="max-w-[350px] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-full h-80">
+        {" "}
+        {/* fixed image area */}
+        <img
+          ref={imgRef}
+          className="rounded-t-lg w-full h-full object-cover object-contain"
+          src={product.colors[selected != null ? selected : imageIndex].image}
+          alt=""
+          onMouseEnter={imageIndexHandle}
+          onMouseOut={() => {
+            setImageIndex(0);
+          }}
+        />
+      </div>
       <div class="p-5">
         <a href="#">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Noteworthy technology acquisitions 2021
+          <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {product.name}
           </h5>
         </a>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          Here are the biggest enterprise technology acquisitions of 2021 so
-          far, in reverse chronological order.
+        <p className=" text-black mb-3 font-normal text-gray-700 dark:text-gray-400">
+          {product.description}
         </p>
-        <a
-          href="#"
-          class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Read more
-          <svg
-            class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 14 10"
+        <ProductColor
+          colors={product.colors}
+          selected={selected}
+          setSelected={setSelected}
+        />
+        <div className="flex justify-between">
+          <span className=" font-bold text-[18px]">Rs.{product.price}</span>
+          <a
+            href="#"
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M1 5h12m0 0L9 1m4 4L9 9"
-            />
-          </svg>
-        </a>
+            Add To Cart
+          </a>
+        </div>
       </div>
     </div>
   );

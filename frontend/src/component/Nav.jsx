@@ -29,7 +29,7 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className=" flex flex-row justify-between items-center bg-black h-[70px] text-white">
+    <nav className=" fixed top-0 left-0 w-full z-50 flex flex-row justify-between items-center bg-black h-[70px] text-white">
       <span className="w-full flex justify-between items-center">
         <span className="relative md:hidden">
           <IoReorderThreeOutline
